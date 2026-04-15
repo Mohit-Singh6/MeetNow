@@ -1,0 +1,497 @@
+.waiting-room-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 35vw;
+}
+
+/* linear-gradient(
+  180deg,
+  hsl(220, 90%, 96%),
+  hsl(250, 90%, 97%),
+  hsl(0, 0%, 100%)
+) */
+
+.fullScreen {
+  width: 100vw;
+  height: 100vh;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(190, 116, 254, 0.17), transparent 40%),
+    radial-gradient(circle at 82% 8%, rgba(79, 102, 168, 0.2), transparent 38%),
+    linear-gradient(140deg, #121421, #171a2a 45%, #1f1830);
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.mainContainer {
+  width: 100%;
+  max-width: 1800px;
+  height: 100%;
+  background: linear-gradient(
+  145deg,
+  rgba(27, 31, 45, 0.95),
+  rgba(30, 35, 52, 0.95),
+  rgba(36, 30, 50, 0.95)
+);
+  /* border: 1px solid rgba(255, 255, 255, 0.14); */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.5rem 0.25rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  box-sizing: border-box;
+}
+
+.waitingContainer {
+  width: 97vw;
+  height: 95vh;
+  background: linear-gradient(
+    145deg,
+    rgba(27, 31, 45, 0.96),
+    rgba(30, 35, 52, 0.96),
+    rgba(36, 30, 50, 0.96)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  color: #e8eefc;
+}
+
+.waitingCard {
+  width: 50%;
+  height: 70%;
+  background-color: rgba(18, 19, 33, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  color: #e1d9f5;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 0.8rem;
+}
+
+.inputUsername {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.connectBtn {
+  cursor: pointer;
+  margin-top: 0.1rem;
+  padding-block: 0.6rem;
+  padding-inline: 1.4rem;
+  font-weight: 500;
+  background-color: #be74fe;
+  color: white;
+  border: none;
+  border-radius: 0.6rem;
+  font-size: 1.1rem;
+  transition: 0.05s;
+  height: 50px;
+}
+
+/* Hover */
+.connectBtn:hover {
+  background-color: #ac4dff;
+}
+
+/* Click (active) */
+.connectBtn:active {
+  transform: scale(0.96);
+}
+
+.usernameField {
+  width: 100%;
+  max-width: 230px;
+  height: 20px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  border-radius: 0.6rem;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  color: #ebf1ff;
+}
+
+.errorBox {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.6rem;
+
+  background: rgba(255, 77, 77, 0.12);
+  border: 1px solid rgba(255, 77, 77, 0.35);
+
+  color: #ffb3b3;
+  font-size: 0.9rem;
+}
+
+/* Focus state */
+.usernameField:focus {
+  border-color: #be74fe;
+  box-shadow: 0 0 0 3px rgba(190, 116, 254, 0.2);
+}
+
+/* Placeholder styling */
+.usernameField::placeholder {
+  color: rgba(226, 236, 255, 0.62);
+}
+
+/* Hover (subtle) */
+.usernameField:hover {
+  border-color: rgba(190, 116, 254, 0.45);
+}
+
+.videosList {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  border-radius: 0.8rem;
+  /* border: 1px solid rgba(255, 255, 255, 0.1); */
+  background: rgba(13, 15, 24, 0.52);
+  overflow: hidden;
+}
+
+.myVideo {
+  border-radius: 0.4rem;
+  width: 16rem;
+  height: 10rem;
+  background-color: #090b12;
+  position: absolute;
+  right: 2rem;
+  bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+  object-fit: cover;
+}
+
+.otherCallersContainer {
+  display: flex;
+  margin: 1rem;
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-content: flex-start;
+  justify-content: center;
+}
+
+.otherCallersContainer > div {
+  display: flex;
+}
+
+.otherVideos-2 {
+  border-radius: 0.6rem;
+  min-width: 80rem;
+  width: 80rem;
+  height: 42.5rem;
+  margin-top: -7px;
+  max-width: calc(100vw - 10rem);
+  background-color: #090b12;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.34);
+  object-fit: cover;
+}
+
+.otherVideos-3 {
+  border-radius: 0.6rem;
+  width: 41rem;
+  max-width: 41rem;
+  height: 37rem;
+  background-color: #090b12;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.34);
+  object-fit: cover;
+}
+
+.otherVideos-4or5 {
+  border-radius: 0.6rem;
+  width: 41rem;
+  max-width: 41rem;
+  height: 19rem;
+  background-color: #090b12;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.34);
+  object-fit: cover;
+}
+
+.callOptions {
+  width: 21rem;
+  height: 3rem;
+  border-radius: 3rem;
+  background-color: rgba(13, 21, 34, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin: 0.1rem 0 0.4rem;
+}
+
+.callButtons {
+  transform: scale(1.3);
+  border-radius: 0.2rem;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #f2f7ff;
+  padding: 14px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  transition: 0.1s;
+  cursor: pointer;
+  margin-left: 1.1rem;
+}
+
+.callButtons:hover {
+  background-color: rgba(190, 116, 254, 0.8);
+}
+
+.screenShareButton {
+  transform: scale(1.1);
+  border-radius: 0.2rem;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #f2f7ff;
+  padding: 14px;
+  /* width: 2rem; */
+  /* height: 2rem; */
+  padding-top: 8px;
+  padding-bottom: 7px;
+  transition: 0.1s;
+  cursor: pointer;
+  margin-left: 0.8rem;
+}
+
+.screenShareButton:hover {
+  background-color: rgba(190, 116, 254, 0.8);
+}
+
+.endCallButton {
+  transform: scale(1.5);
+  border-radius: 0.2rem;
+  background-color: rgba(249, 0, 0, 0.773);
+  padding: 10px;
+  padding-top: 7px;
+  padding-bottom: 6px;
+  transition: 0.1s;
+  cursor: pointer;
+  border-top-right-radius: 3rem;
+  border-bottom-right-radius: 3rem;
+  margin-left: 1.3rem;
+  /* margin-right: 0.5rem; */
+}
+
+.endCallButton:hover {
+  background-color: rgb(113, 0, 0);
+}
+
+.micBtn {
+  border-radius: 0.2rem;
+  border-top-left-radius: 3rem;
+  border-bottom-left-radius: 3rem;
+  margin-left: 0px;
+}
+
+.chatBtn {
+  margin-left: 0.8rem;
+}
+
+.upperSection {
+  display: grid;
+  height: 90%;
+  width: 100%;
+  position: relative;
+  gap: 1rem;
+  min-height: 0;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.chatSection {
+  width: 100%;
+  max-width: 18rem;
+  height: 99%;
+  min-height: 0;
+  max-height: none;
+  align-self: start;
+  position: relative;
+  background: rgba(24, 27, 41, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
+  display:flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  min-height: 0;
+}
+
+.chatHeadingSection {
+  /* margin-top: 0px; */
+  color: #edf3ff;
+  background: rgba(36, 40, 58, 0.95);
+  padding-inline: 0.8rem;
+  /* padding-block: -1rem; */
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.chatHeading {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.chatHeadingClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 0.3rem;
+  cursor: pointer;
+  color: #eef4ff;
+  transition: all 0.2s ease;
+}
+
+.chatHeadingClose:hover {
+  background-color: rgba(255, 255, 255, 0.24);
+}
+
+.chatSection > div:nth-child(2) {
+  flex: 1;
+  min-height: 0;
+}
+
+.chatsDisplay {
+  /* padding: 0.5rem; */
+  /* height: 1rem; */
+  margin-top: 0.1rem;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  /* bottom: 0; */
+}
+
+.chatMessage {
+  padding-inline: 0.8rem;
+  padding-block: 0.1rem;
+  margin: 0.4rem;
+  margin-block: 0.2rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 0.3rem;
+  width: 15.5rem;
+}
+
+.chatMessageUsername {
+  font-weight: 300;
+  color: #daafff;
+  margin-bottom: 0rem;
+  margin-top: 0.3rem;
+}
+
+.chatMessageText {
+  color: #edf3ff;
+  font-weight: 400;
+  margin-top: 0.2rem;
+  margin-bottom: 0.3rem;
+}
+
+
+/* Shrink remote video area when chat is open */
+.upperSection:has(.chatSection) .otherVideos-2 {
+  min-width: 60rem;
+  width: 60rem;
+}
+
+.upperSection:has(.chatSection) .otherVideos-3 {
+  width: 31rem;
+  max-width: 31rem;
+}
+
+.upperSection:has(.chatSection) .otherVideos-4or5 {
+  width: 31rem;
+  max-width: 31rem;
+}
+
+.upperSection:has(.chatSection) {
+  grid-template-columns: minmax(0, 1fr) 18rem;
+  align-items: stretch;
+}
+
+.messageInput {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem;
+  padding: 0.7rem;
+  margin-top: 0;
+  border-top: none;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.messageInput input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  outline: none;
+  margin-bottom: 0px;
+  height: 1.1rem;
+  
+  border-radius: 0.5rem;
+  
+  background-color: #191c2af7;
+  transition: all 0.1s ease;
+  color: #edf3ff;
+}
+
+.sendBtn {
+  cursor: pointer;
+  margin-left: 0;
+  padding-block: 0.6rem;
+  padding-inline: 0.9rem;
+  font-weight: 500;
+  background-color: #be74fe;
+  color: white;
+  border: none;
+  border-radius: 0.6rem;
+  font-size: 1.1rem;
+  transition: all 0.1s ease;
+  height: 2.7rem;
+  min-width: 4.3rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.sendBtn:hover {
+  background-color: #ac4dff;
+}
+
+.messageInput input:focus {
+  border-color: rgba(190, 116, 254, 0.86);
+  box-shadow: 0 0 0 2px rgba(190, 116, 254, 0.28);
+}
