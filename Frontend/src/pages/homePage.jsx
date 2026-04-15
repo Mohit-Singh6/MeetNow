@@ -4,10 +4,11 @@ import withAuth from '../utils/withAuth.jsx';
 import imgLeft from '../assets/imgleft1.png';
 import imgRight from '../assets/imageright1.png';
 import arrowIcon from '../assets/arrow.png';
+import server from '../environment.js';
 
 import "../styles/home.css";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = server.prod;
 
 function HomePage() {
     const navigate = useNavigate();

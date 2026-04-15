@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import server from '../environment.js';
 
 export default function LandingRedirectPage() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function LandingRedirectPage() {
 
         const checkSession = async () => {
             try {
-                const response = await fetch("http://localhost:3000/auth/session", {
+                const response = await fetch(`${server.prod}/auth/session`, {
                     method: "GET",
                     credentials: "include",
                     headers: { Accept: "application/json" },

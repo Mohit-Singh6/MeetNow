@@ -12,6 +12,7 @@ import logo from '../../../assets/logo.png';
 import { GoogleIcon, FacebookIcon } from './CustomIcons.jsx';
 import { Link, useNavigate } from "react-router-dom";
 import './auth.css';
+import server from '../../../environment.js';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -68,7 +69,7 @@ export default function SignInCard() {
     if (!validateInputs()) return;
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${server.prod}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }, // Without the header, the server does not know this is JSON.
         // Why this header is NOT needed in forms

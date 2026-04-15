@@ -3,9 +3,10 @@ import io from "socket.io-client";
 import '../styles/videoMeet.css';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import server from '../environment.js';
 
 
-const serverUrl = 'http://localhost:3000';
+const serverUrl = server.prod;
 
 const peerConfigConnections = {
     iceServers: [

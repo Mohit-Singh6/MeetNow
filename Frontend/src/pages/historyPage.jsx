@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import withAuth from '../utils/withAuth.jsx';
+import server from '../environment.js';
 
 import "../styles/home.css";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = server.prod;
 
 function HistoryPage() {
     const navigate = useNavigate();

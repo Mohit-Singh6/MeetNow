@@ -10,6 +10,7 @@ import logo from '../../../assets/logo.png';
 import { GoogleIcon, FacebookIcon } from './CustomIcons.jsx';
 import { Link, useNavigate } from "react-router-dom";
 import './auth.css';
+import server from '../../../environment.js';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -72,7 +73,7 @@ export default function SignInCard() {
     if (!isValid) return;
 
     try {
-      const response = await fetch("http://localhost:3000/signup", {
+      const response = await fetch(`${server.prod}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
