@@ -5,6 +5,7 @@ import imgLeft from '../assets/imgleft1.png';
 import imgRight from '../assets/imageright1.png';
 import arrowIcon from '../assets/arrow.png';
 import server from '../environment.js';
+import logo from "../assets/logo.png";
 
 import "../styles/home.css";
 
@@ -73,7 +74,7 @@ function HomePage() {
             <div className="homeContent">
                 <div className="navBar">
                     <div className="logoContent" onClick={handleLogoClick}>
-                        <img className="meetNowLogo" src="../assets/logo.png" alt="meetNowLogo"/>
+                        <img className="meetNowLogo" src={logo} alt="meetNowLogo"/>
                         <h3><span>Meet</span>Now</h3>
                     </div>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import withAuth from '../utils/withAuth.jsx';
 import server from '../environment.js';
+import logo from "../assets/logo.png";
 
 import "../styles/home.css";
 
@@ -83,7 +84,7 @@ function HistoryPage() {
                 <div className="historyTopBar">
                     <div>
                         <div className="logoContentHistory" onClick={handleLogoClick}>
-                            <img className="meetNowLogoHistory" src="../assets/logo.png" alt="meetNowLogo"/>
+                            <img className="meetNowLogoHistory" src={logo} alt="meetNowLogo"/>
                             <h3><span>Meet</span>Now</h3>
                         </div>
                         <h1>Meeting History</h1>

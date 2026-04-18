@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import server from '../environment.js';
+import logo from "../assets/logo.png";
+import callImage from "../assets/callImage.png";
 
 export default function LandingRedirectPage() {
     const navigate = useNavigate();
@@ -69,7 +71,7 @@ export default function LandingRedirectPage() {
             <div className="landingPageContent">
                 <div className="navBar">
                     <div className="logoContent" onClick={handleLogoClick}>
-                        <img className="meetNowLogo" src="../assets/logo.png" alt="meetNowLogo"/>
+                        <img className="meetNowLogo" src={logo} alt="meetNowLogo"/>
                         <h3><span>Meet</span>Now</h3>
                     </div>
 
@@ -126,7 +128,7 @@ export default function LandingRedirectPage() {
 
                 <div className="vidImgContainer">
                     <img
-                        src="../assets/callImage.png"
+                        src={callImage}
                         className="callImage"
                         alt="Demo Img"
                     />
