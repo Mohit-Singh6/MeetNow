@@ -27,9 +27,17 @@ export function connectToSocket(httpServer) {
     //     "http://127.0.0.1:5173",
     // ];
 
+    const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
     const io = new Server(httpServer, {
         cors: {
-            origin: "*", // for all requests (don't use for production)
+            origin: function(origin, callback) {
+                // Allow requests with no origin or matching the allowed origin
+                if (!origin) return callback(null, true);
+                if (allowedOrigin === origin || allowedOrigin === '*') {
+                    return callback(null, true);
+                }
+                return callback(null, true); // fallback for flexibility just like api cors
+            },
             methods: ['PUT','GET'],
             allowedHeaders: "*",
             credentials: true

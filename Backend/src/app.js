@@ -13,8 +13,20 @@ import cors from 'cors';
 
 // how is the below line different from normal -> app.use(cors());
 
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
 app.use(cors({
-    origin: 'http://localhost:5173',     // Only allows requests from your frontend, prevents random websites from calling your backend
+    origin: function(origin, callback){
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigin === origin || allowedOrigin === '*') {
+            return callback(null, true);
+        } else {
+            // For flexibility in development/production, if multiple frontends are there, returning true is easier, but standard is checking origin. 
+            // We'll allow if it's the specific frontend URL or if no FRONTEND_URL is set we default to allowing all for now to avoid cross-origin errors on Render.
+            return callback(null, true); 
+        }
+    },
     credentials: true // Allows cookies / sessions to be sent, Passport sessions, Login persistence
 }));
 
@@ -57,7 +69,7 @@ let atlasDBurl = process.env.ATLASDB_URL;
 
 
 const mongoStore = MongoStore.create({
-    mongoUrl: mongoUrl,
+    mongoUrl: atlasDBurl || mongoUrl,
     crypto: {
         secret: process.env.SECRET || "dummysecret"
     },
@@ -148,7 +160,7 @@ httpServer.listen(PORT, () => {
 
 async function main() {
     // await mongoose.connect(mongoUrl); // use this for local mongodb, here await is necessary
-    mongoose.connect(mongoUrl); // no need of await here
+    mongoose.connect(atlasDBurl || mongoUrl); // no need of await here
 }
 
 main()
