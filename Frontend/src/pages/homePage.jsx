@@ -73,7 +73,7 @@ function HomePage() {
             <div className="homeContent">
                 <div className="navBar">
                     <div className="logoContent" onClick={handleLogoClick}>
-                        <img className="meetNowLogo" src="src/assets/logo.png" alt="meetNowLogo"/>
+                        <img className="meetNowLogo" src="../assets/logo.png" alt="meetNowLogo"/>
                         <h3><span>Meet</span>Now</h3>
                     </div>
 

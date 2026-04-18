@@ -69,7 +69,7 @@ export default function LandingRedirectPage() {
             <div className="landingPageContent">
                 <div className="navBar">
                     <div className="logoContent" onClick={handleLogoClick}>
-                        <img className="meetNowLogo" src="src/assets/logo.png" alt="meetNowLogo"/>
+                        <img className="meetNowLogo" src="../assets/logo.png" alt="meetNowLogo"/>
                         <h3><span>Meet</span>Now</h3>
                     </div>
 
@@ -126,7 +126,7 @@ export default function LandingRedirectPage() {
 
                 <div className="vidImgContainer">
                     <img
-                        src="src/assets/callImage.png"
+                        src="../assets/callImage.png"
                         className="callImage"
                         alt="Demo Img"
                     />

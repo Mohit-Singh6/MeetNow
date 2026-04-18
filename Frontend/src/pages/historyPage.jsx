@@ -83,7 +83,7 @@ function HistoryPage() {
                 <div className="historyTopBar">
                     <div>
                         <div className="logoContentHistory" onClick={handleLogoClick}>
-                            <img className="meetNowLogoHistory" src="src/assets/logo.png" alt="meetNowLogo"/>
+                            <img className="meetNowLogoHistory" src="../assets/logo.png" alt="meetNowLogo"/>
                             <h3><span>Meet</span>Now</h3>
                         </div>
                         <h1>Meeting History</h1>
