@@ -1,6 +1,11 @@
 
+import dotenv from 'dotenv';
+import {fileURLToPath} from 'node:url';
+
 if (process.env.NODE_ENV !== "production") {
-    await import("dotenv/config");
+    dotenv.config({
+        path: fileURLToPath(new URL('./.env', import.meta.url))
+    });
 }
 
 
@@ -49,6 +54,7 @@ import {createServer} from 'node:http';
 
 const httpServer = createServer(app);
 const io = connectToSocket(httpServer); // connected the socket.io to the httpServer using the function imported from the socket manager
+app.set('trust proxy', 1);
 
 
 // requiring passport stuff
@@ -89,13 +95,15 @@ const settings = {
     secret: process.env.SECRET || "dummysecret",
     resave: false,
     saveUninitialized: true,
-    cookie: { // Method 1 to delete a cookie after some time. 
+    cookie: {
         // expires: Date.now() + 3 * 24 * 60 * 60 * 1000, // in milliseconds (3 days 24 hrs 60 min 60 sec 1000 ms) // Method 2 to expire a cookie after some time. 
         // You had expires: Date.now() + ... enabled. The problem with this is that Date.now() is only computed once as soon as your Node backend initially starts. This meant every active session would prematurely completely expire on that exact same universal date, regardless of when users signed in. I went ahead and changed it to utilize the maxAge: 3 * 24 * 60 * 60 * 1000 property instead, which behaves dynamically relative to whenever a user actually logs in.
         
         maxAge: 3 * 24 * 60 * 60 * 1000, // only use one out of these two as only the one which was written later will work. 
         path: '/',
         httpOnly: true, // to avoid cross scripting attacks 
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        secure: process.env.NODE_ENV === "production",
     }
 };
 
