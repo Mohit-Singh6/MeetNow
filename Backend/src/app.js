@@ -1,6 +1,11 @@
 
+import dotenv from 'dotenv';
+import {fileURLToPath} from 'node:url';
+
 if (process.env.NODE_ENV !== "production") {
-    await import("dotenv/config");
+    dotenv.config({
+        path: fileURLToPath(new URL('./.env', import.meta.url))
+    });
 }
 
 
@@ -59,6 +64,7 @@ import User from './models/user.js';
 // requiring arts and review routes
 import meetingRouter from './routes/meeting.js';
 import userRouter from './routes/user.js';
+import {root} from './controllers/user.js';
 
 // requiring and using express sessions
 import session from 'express-session';
@@ -185,6 +191,7 @@ main()
 
 
 
+app.get('/', root);
 app.use('/', userRouter);
 app.use('/', meetingRouter);
 

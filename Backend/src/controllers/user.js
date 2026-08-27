@@ -6,7 +6,10 @@ const root = (req,res) => {
 };
 
 const signupForm = (req,res) => {
-    res.status(httpStatus.OK).redirect('/signup');
+    res.status(httpStatus.OK).json({
+        success: true,
+        message: "Signup endpoint is ready."
+    });
 };
 
 // const signup = async (req, res, next) => {
@@ -70,7 +73,10 @@ const signup = async (req, res, next) => {
 
 
 const loginForm = (req,res) => {
-    res.status(httpStatus.OK).redirect('/login');
+    res.status(httpStatus.OK).json({
+        success: true,
+        message: "Login endpoint is ready."
+    });
 };
 
 // const login = async (req,res) => {

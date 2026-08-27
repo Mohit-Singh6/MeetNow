@@ -1,6 +1,6 @@
 import express from 'express';
 import wrapAsync from '../utilities/wrapAsync.js';
-import {root, signupForm, signup, loginForm, logout, sessionStatus, getUserHistory, addToHistory} from '../controllers/user.js';
+import {signupForm, signup, loginForm, logout, sessionStatus, getUserHistory, addToHistory} from '../controllers/user.js';
 
 // const { validateArt } = require('../middleware.js');
 // const { isLoggedIn, isOwner } = require('../middleware.js');
@@ -12,8 +12,6 @@ import { isLoggedIn } from '../middleware.js';
 const router = express.Router();
 
     // Using router.route
-
-router.get('/', root);
 
 // sign up
 router
