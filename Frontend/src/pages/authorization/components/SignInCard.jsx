@@ -69,7 +69,7 @@ export default function SignInCard() {
     if (!validateInputs()) return;
 
     try {
-      const response = await fetch(`${server.prod}/login`, {
+      const response = await fetch(`${server.prod}/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }, // Without the header, the server does not know this is JSON.
         // Why this header is NOT needed in forms

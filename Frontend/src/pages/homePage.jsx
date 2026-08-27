@@ -48,7 +48,7 @@ function HomePage() {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/logout`, {
+            const response = await fetch(`${API_BASE_URL}/user/logout`, {
                 method: "GET",
                 credentials: "include",
                 headers: {

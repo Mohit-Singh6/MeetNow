@@ -16,7 +16,7 @@ export default function LandingRedirectPage() {
 
         const checkSession = async () => {
             try {
-                const response = await fetch(`${server.prod}/auth/session`, {
+                const response = await fetch(`${server.prod}/user/session`, {
                     method: "GET",
                     credentials: "include",
                     headers: { Accept: "application/json" },

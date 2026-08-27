@@ -56,9 +56,9 @@ router
 
     // passport.authenticate => // used for authentication and if it succeeds, this will automatically login the user and [create a session but only when you are using passport.session() + express-session ]
 
-router.get('/auth/session', sessionStatus);
-router.get('/user/history', isLoggedIn, wrapAsync(getUserHistory));
-router.post('/user/history', isLoggedIn, wrapAsync(addToHistory));
+router.get('/session', sessionStatus);
+router.get('/history', isLoggedIn, wrapAsync(getUserHistory));
+router.post('/history', isLoggedIn, wrapAsync(addToHistory));
 
 // router.post("/login", (req, res, next) => {
 //   console.log("Login attempt with:", { username: req.body.username });

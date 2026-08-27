@@ -73,7 +73,7 @@ export default function SignInCard() {
     if (!isValid) return;
 
     try {
-      const response = await fetch(`${server.prod}/signup`, {
+      const response = await fetch(`${server.prod}/user/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

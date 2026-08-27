@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import server from '../environment.js';
 
-const BACKEND_AUTH_CHECK_URL = `${server.prod}/auth/session`;
+const BACKEND_AUTH_CHECK_URL = `${server.prod}/user/session`;
 
 const withAuth = (WrappedComponent) => {
     const AuthComponent = (props) => {

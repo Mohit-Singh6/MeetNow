@@ -195,8 +195,8 @@ main()
 
 
 app.get('/', root);
-app.use('/', userRouter);
-app.use('/', meetingRouter);
+app.use('/user', userRouter);
+app.use('/meetings', meetingRouter);
 
 
 // app.all (/.*/, (req,res,next) => {
