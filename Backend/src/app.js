@@ -63,7 +63,6 @@ import userRouter from './routes/user.js';
 // requiring and using express sessions
 import session from 'express-session';
 
-// let mongoUrl = "mongodb://127.0.0.1:27017/ArtEcho";
 let mongoUrl = "mongodb://127.0.0.1:27017/zoom";
 let atlasDBurl = process.env.ATLASDB_URL;
 
@@ -84,7 +83,7 @@ mongoStore.on("err", (err) => {
 });
 
 const settings = {
-    // store: mongoStore, // to store session info in the database instead of memory
+    store: mongoStore, // to store session info in the database instead of memory
     name: "connect.sid",
     secret: process.env.SECRET || "dummysecret",
     resave: false,

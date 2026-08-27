@@ -1,6 +1,10 @@
 import User from "../models/user.js";
 import httpStatus from 'http-status';
 
+const root = (req,res) => {
+    res.status(httpStatus.OK).send("Welcome to the MeetNow Backend! This is the root route.");
+};
+
 const signupForm = (req,res) => {
     res.status(httpStatus.OK).redirect('/signup');
 };
@@ -69,12 +73,12 @@ const loginForm = (req,res) => {
     res.status(httpStatus.OK).redirect('/login');
 };
 
-const login = async (req,res) => {
-    return res.status(httpStatus.OK).json({
-        success: true,
-        message: "Login successful!."
-    });
-};
+// const login = async (req,res) => {
+//     return res.status(httpStatus.OK).json({
+//         success: true,
+//         message: "Login successful!."
+//     });
+// };
 
 const logout = (req, res, next) => {
     req.logout((err) => {
@@ -159,4 +163,4 @@ const addToHistory = async(req, res) => {
     });
 };
 
-export {signupForm, signup, loginForm, login, logout, sessionStatus, getUserHistory, addToHistory};
+export {root, signupForm, signup, loginForm, logout, sessionStatus, getUserHistory, addToHistory};
