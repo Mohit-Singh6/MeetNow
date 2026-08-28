@@ -41,7 +41,6 @@ export default function VideoMeet() {
 In your original code, when a user joined, two types of data started flying across the internet simultaneously:
 
     The SDP (The Handshake): Large data about video formats.
-
     ICE Candidates (The Path): Small bits of data about IP addresses.
 
 The Crash/Failure Logic:

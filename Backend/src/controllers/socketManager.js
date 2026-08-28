@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 // Imports the Socket.IO Server class
 // This is used to create a real-time server that attaches to an HTTP server
 
-let connections = {}; 
+let connections = {};
 // Keeps track of who is connected to which meeting (room)
 // Structure example:
 // {
@@ -30,7 +30,7 @@ export function connectToSocket(httpServer) {
     const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
     const io = new Server(httpServer, {
         cors: {
-            origin: function(origin, callback) {
+            origin: function (origin, callback) {
                 // Allow requests with no origin or matching the allowed origin
                 if (!origin) return callback(null, true);
                 if (allowedOrigin === origin || allowedOrigin === '*') {
@@ -38,7 +38,7 @@ export function connectToSocket(httpServer) {
                 }
                 return callback(null, true); // fallback for flexibility just like api cors
             },
-            methods: ['PUT','GET'],
+            methods: ['PUT', 'GET'],
             allowedHeaders: "*",
             credentials: true
         }
@@ -46,21 +46,21 @@ export function connectToSocket(httpServer) {
     // Creates a Socket.IO server and binds it to the HTTP server
     // This allows WebSocket upgrades on the same port
 
-        //     **Short and clear version why you need cors here:**
+    //     **Short and clear version why you need cors here:**
 
-        // * A Socket.IO connection **starts as a normal HTTP request**
-        // * Browsers apply **CORS rules to that request**
-        // * Socket.IO’s HTTP requests **do not go through Express**
-        // * So Express CORS settings **don’t affect sockets**
+    // * A Socket.IO connection **starts as a normal HTTP request**
+    // * Browsers apply **CORS rules to that request**
+    // * Socket.IO’s HTTP requests **do not go through Express**
+    // * So Express CORS settings **don’t affect sockets**
 
-        // That’s why:
+    // That’s why:
 
-        // * you configure CORS in Express → for API routes
-        // * you configure CORS again in Socket.IO → for socket connections
+    // * you configure CORS in Express → for API routes
+    // * you configure CORS again in Socket.IO → for socket connections
 
-        // **Easy analogy:**
-        // Express and Socket.IO have **separate doors**.
-        // You must allow entry at **both doors**, or the browser blocks one of them.
+    // **Easy analogy:**
+    // Express and Socket.IO have **separate doors**.
+    // You must allow entry at **both doors**, or the browser blocks one of them.
 
 
     io.on("connection", (socket) => {
@@ -126,13 +126,13 @@ export function connectToSocket(httpServer) {
             // Socket.IO is ONLY a messenger here
 
 
-                // Perfect explanation with analogy
+            // Perfect explanation with analogy
 
             // .on works like an event listener: it waits for a client to emit an event (like join or send message).
-// When a user triggers that event, the callback runs, and inside it the server uses .to().emit() to broadcast the result to other users in the meeting.
+            // When a user triggers that event, the callback runs, and inside it the server uses .to().emit() to broadcast the result to other users in the meeting.
         });
 
-        
+
         socket.on("chat-message", (data, sender) => {
             // --- 1. SERVER-SIDE ROOM VERIFICATION (SECURITY) ---
             // We don't trust the room name sent by the client (payload.path). 
@@ -179,6 +179,27 @@ export function connectToSocket(httpServer) {
                 time: new Date()       // Current timestamp
             });
 
+
+            /*
+            `messages` is only a **server-side in-memory array**. The frontend cannot access it directly.
+            ```js
+            messages[matchingRoom].push(...)
+            ```
+
+            This stores the message on the backend, but it does not automatically send it to browsers.
+            ```js
+            socket.to(matchingRoom).emit("chat-message", ...)
+            ```
+
+            This broadcasts the message in real time to the other users’ frontends.
+
+            So:
+            - `messages.push()` = store the message on the server
+            - `socket.to.emit()` = deliver the message to connected users
+
+            The array could be exposed through an HTTP API, but that would only provide messages when the frontend requests them, not instant real-time updates.
+            */
+
             // --- 5. THE BROADCAST ---
             // 'socket.to(matchingRoom)' sends the message to everyone in that room EXCEPT the sender.
             // We send 3 distinct arguments: the text, the name, and the sender's ID.
@@ -189,174 +210,174 @@ export function connectToSocket(httpServer) {
             // We use 'socket.to(room)' to avoid the sender getting a duplicate of their own message.
         });
 
-            //  Compare the two (VERY IMPORTANT)
-                // ❌ Sends to EVERYONE (including sender)
-                // io.to(room).emit(...)
+        //  Compare the two (VERY IMPORTANT)
+        // ❌ Sends to EVERYONE (including sender)
+        // io.to(room).emit(...)
 
-                // ✅ Sends to everyone EXCEPT sender
-                // socket.to(room).emit(...)
+        // ✅ Sends to everyone EXCEPT sender
+        // socket.to(room).emit(...)
 
 
-//         socket.on("chat-message", (data, sender) => {
-//     /*
-//         DIFFERENCE FROM EARLIER VERSION:
-//         --------------------------------
-//         Earlier, we trusted `data.path` (room / meetingCode) sent by the client.
-//         That assumes:
-//         - client always sends correct room
-//         - client is not buggy or malicious
+        //         socket.on("chat-message", (data, sender) => {
+        //     /*
+        //         DIFFERENCE FROM EARLIER VERSION:
+        //         --------------------------------
+        //         Earlier, we trusted `data.path` (room / meetingCode) sent by the client.
+        //         That assumes:
+        //         - client always sends correct room
+        //         - client is not buggy or malicious
 
-//         This version DOES NOT trust the client.
-//         Instead, the server figures out which room this socket belongs to.
-//     */
+        //         This version DOES NOT trust the client.
+        //         Instead, the server figures out which room this socket belongs to.
+        //     */
 
-//     /*
-//         Object.entries(connections)
-//         ---------------------------
-//         `connections` is an object like:
-//         {
-//             roomA: [socketId1, socketId2],
-//             roomB: [socketId3]
-//         }
+        //     /*
+        //         Object.entries(connections)
+        //         ---------------------------
+        //         `connections` is an object like:
+        //         {
+        //             roomA: [socketId1, socketId2],
+        //             roomB: [socketId3]
+        //         }
 
-//         Object.entries converts it to:
-//         [
-//             ["roomA", [socketId1, socketId2]],
-//             ["roomB", [socketId3]]
-//         ]
+        //         Object.entries converts it to:
+        //         [
+        //             ["roomA", [socketId1, socketId2]],
+        //             ["roomB", [socketId3]]
+        //         ]
 
-//         We use this to SEARCH all rooms.
-//     */
+        //         We use this to SEARCH all rooms.
+        //     */
 
-//     const [matchingRoom, found] = Object.entries(connections).reduce( // Object.entries returns the key, value pairs => 
-// [
-//   ["roomA", ["id1", "id2"]],
-//   ["roomB", ["id3"]]
-// ]
+        //     const [matchingRoom, found] = Object.entries(connections).reduce( // Object.entries returns the key, value pairs => 
+        // [
+        //   ["roomA", ["id1", "id2"]],
+        //   ["roomB", ["id3"]]
+        // ]
 
-//         ([room, isFound], [roomKey, roomValue]) => {
-    // In reduce, the second parameter is always the current element from the array being iterated, while the first (accumulator) is fully controlled by you. - can be anything but keep returning it in the same structure each time.
-//             /*
-//                 `room`     → currently matched room (string)
-//                 `isFound`  → whether we already found the room
-//                 `roomKey`  → current room name in loop
-//                 `roomValue`→ array of socket IDs in that room
-//             */
+        //         ([room, isFound], [roomKey, roomValue]) => {
+        // In reduce, the second parameter is always the current element from the array being iterated, while the first (accumulator) is fully controlled by you. - can be anything but keep returning it in the same structure each time.
+        //             /*
+        //                 `room`     → currently matched room (string)
+        //                 `isFound`  → whether we already found the room
+        //                 `roomKey`  → current room name in loop
+        //                 `roomValue`→ array of socket IDs in that room
+        //             */
 
-//             /*
-//                 DIFFERENCE:
-//                 ----------
-//                 Earlier code:
-//                 - assumed we already know the room
-//                 - no searching required
+        //             /*
+        //                 DIFFERENCE:
+        //                 ----------
+        //                 Earlier code:
+        //                 - assumed we already know the room
+        //                 - no searching required
 
-//                 Now:
-//                 - we check EVERY room
-//                 - and see if socket.id exists inside it
-//             */
+        //                 Now:
+        //                 - we check EVERY room
+        //                 - and see if socket.id exists inside it
+        //             */
 
-//             if (!isFound && roomValue.includes(socket.id)) {
-//                 /*
-//                     If:
-//                     - we have NOT found the room yet
-//                     - AND this room contains the current socket.id
+        //             if (!isFound && roomValue.includes(socket.id)) {
+        //                 /*
+        //                     If:
+        //                     - we have NOT found the room yet
+        //                     - AND this room contains the current socket.id
 
-//                     Then this is the correct meeting for this socket.
-//                 */
-//                 return [roomKey, true];
-//             }
+        //                     Then this is the correct meeting for this socket.
+        //                 */
+        //                 return [roomKey, true];
+        //             }
 
-//             /*
-//                 If not found yet, or socket not in this room,
-//                 keep previous state unchanged.
-//             */
-//             return [room, isFound];
-//         },
-//         ["", false] // initial values: no room, not found
-//     );
+        //             /*
+        //                 If found, or socket not in this room,
+        //                 keep previous state unchanged.
+        //             */
+        //             return [room, isFound];
+        //         },
+        //         ["", false] // initial values: no room, not found
+        //     );
 
-//     /*
-//         At this point:
-//         -------------
-//         - matchingRoom → room name where socket belongs
-//         - found        → boolean (true if room was found)
+        //     /*
+        //         At this point:
+        //         -------------
+        //         - matchingRoom → room name where socket belongs
+        //         - found        → boolean (true if room was found)
 
-//         If found === false:
-//         - socket is not part of any meeting
-//         - message should NOT be processed
-//     */
+        //         If found === false:
+        //         - socket is not part of any meeting
+        //         - message should NOT be processed
+        //     */
 
-//     if (found === true) {
-//         /*
-//             DIFFERENCE:
-//             ----------
-//             Earlier version:
-//             - assumed messages[data.path] exists or can be created
+        //     if (found === true) {
+        //         /*
+        //             DIFFERENCE:
+        //             ----------
+        //             Earlier version:
+        //             - assumed messages[data.path] exists or can be created
 
-//             Now:
-//             - we use matchingRoom (server-trusted)
-//         */
+        //             Now:
+        //             - we use matchingRoom (server-trusted)
+        //         */
 
-//         if (messages[matchingRoom] === undefined) {
-//             /*
-//                 Initialize chat storage for this room
-//                 Only done when first message arrives
-//             */
-//             messages[matchingRoom] = [];
-//         }
+        //         if (messages[matchingRoom] === undefined) {
+        //             /*
+        //                 Initialize chat storage for this room
+        //                 Only done when first message arrives
+        //             */
+        //             messages[matchingRoom] = [];
+        //         }
 
-//         /*
-//             Store message in server memory
-//             ------------------------------
-//             This allows:
-//             - chat history
-//             - debugging
-//             - replay for late joiners (future)
-//         */
-//         messages[matchingRoom].push({
-//             sender,            // who sent the message
-//             data,              // message content
-//             senderSocketId: socket.id,
-//             time: new Date()   // timestamp
-//         });
+        //         /*
+        //             Store message in server memory
+        //             ------------------------------
+        //             This allows:
+        //             - chat history
+        //             - debugging
+        //             - replay for late joiners (future)
+        //         */
+        //         messages[matchingRoom].push({
+        //             sender,            // who sent the message
+        //             data,              // message content
+        //             senderSocketId: socket.id,
+        //             time: new Date()   // timestamp
+        //         });
 
-//         /*
-//             DIFFERENCE:
-//             ----------
-//             Earlier version:
-//             socket.to(data.path).emit(...)
+        //         /*
+        //             DIFFERENCE:
+        //             ----------
+        //             Earlier version:
+        //             socket.to(data.path).emit(...)
 
-//             Now:
-//             socket.to(matchingRoom).emit(...)
+        //             Now:
+        //             socket.to(matchingRoom).emit(...)
 
-//             Why?
-//             ----
-//             - matchingRoom is verified by server
-//             - data.path could be wrong / tampered
-//         */
+        //             Why?
+        //             ----
+        //             - matchingRoom is verified by server
+        //             - data.path could be wrong / tampered
+        //         */
 
-//         socket.to(matchingRoom).emit("chat-message", data, sender);
-//         /*
-//             Sends message to:
-//             - everyone in the room
-//             - EXCEPT the sender
+        //         socket.to(matchingRoom).emit("chat-message", data, sender);
+        //         /*
+        //             Sends message to:
+        //             - everyone in the room
+        //             - EXCEPT the sender
 
-//             Sender already knows what they sent.
-//         */
-//     }
+        //             Sender already knows what they sent.
+        //         */
+        //     }
 
-//     /*
-//         If found === false:
-//         ------------------
-//         - socket is not part of any room
-//         - we silently ignore the message
+        //     /*
+        //         If found === false:
+        //         ------------------
+        //         - socket is not part of any room
+        //         - we silently ignore the message
 
-//         This prevents:
-//         - crashes
-//         - undefined room errors
-//         - unauthorized message sending
-//     */
-// });
+        //         This prevents:
+        //         - crashes
+        //         - undefined room errors
+        //         - unauthorized message sending
+        //     */
+        // });
 
 
 
@@ -418,12 +439,6 @@ export function connectToSocket(httpServer) {
             // * When the connection breaks, it internally emits `"disconnect"`
             // * Your handler runs automatically
 
-            // ---
-
-            // ### One-line takeaway (remember this)
-
-            // > `"disconnect"` is a built-in, case-sensitive Socket.IO event that the library fires automatically when a connection ends.
-
 
             console.log("Socket disconnected:", socket.id);
 
@@ -443,7 +458,7 @@ export function connectToSocket(httpServer) {
                     socket.to(path).emit("user-left", socket.id);
                     // Notify others in the meeting
 
-//                     **Yes — it notifies everyone automatically. No loop is needed.**
+                    //                     **Yes — it notifies everyone automatically. No loop is needed.**
 
                     // Here’s why, short and clear.
                     // ---

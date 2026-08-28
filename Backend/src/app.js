@@ -62,8 +62,8 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import User from './models/user.js';
 
-// requiring arts and review routes
-import meetingRouter from './routes/meeting.js';
+// requiring meetings and user routes
+// import meetingRouter from './routes/meeting.js';
 import userRouter from './routes/user.js';
 import {root} from './controllers/user.js';
 
@@ -196,7 +196,7 @@ main()
 
 app.get('/', root);
 app.use('/user', userRouter);
-app.use('/meetings', meetingRouter);
+// app.use('/meetings', meetingRouter);
 
 
 // app.all (/.*/, (req,res,next) => {
